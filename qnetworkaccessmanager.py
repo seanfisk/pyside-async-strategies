@@ -15,6 +15,9 @@
 # - Requires significant changes to test code. We cannot use httpretty with
 #   requests to test our HTTP requests because QNAM does not utilize Python's
 #   socket module.
+# - The QNAM API is slightly more cumbersome than using requests. For example,
+#   we have to manually decode the returned QByteArray using UTF-8. requests,
+#   on the other hand, does this for us.
 
 import sys
 
