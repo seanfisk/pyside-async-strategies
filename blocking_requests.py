@@ -13,23 +13,13 @@ import sys
 import requests
 from PySide import QtGui
 
+from window import DisplayWidget
 from html_parser import parse_html
-from progress import ProgressIndicator
 
 
-class MainWidget(QtGui.QWidget):
+class MyWidget(DisplayWidget):
     def __init__(self, parent=None):
-        super(MainWidget, self).__init__(parent)
-
-        self._layout = QtGui.QVBoxLayout(self)
-        self._textarea = QtGui.QPlainTextEdit()
-        self._textarea.setReadOnly(True)
-        self._layout.addWidget(self._textarea)
-        self._button = QtGui.QPushButton('Download')
-        self._button.clicked.connect(self._button_clicked)
-        self._layout.addWidget(self._button)
-        self._progress = ProgressIndicator()
-        self._layout.addWidget(self._progress)
+        super(MyWidget, self).__init__(parent)
 
     def _button_clicked(self):
         response = requests.get(
@@ -40,7 +30,7 @@ class MainWidget(QtGui.QWidget):
 
 def main(argv):
     app = QtGui.QApplication(argv)
-    w = MainWidget()
+    w = MyWidget()
     w.show()
     w.raise_()
     return app.exec_()

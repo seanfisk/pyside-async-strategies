@@ -16,8 +16,8 @@ import sys
 import requests
 from PySide import QtCore, QtGui
 
+from window import DisplayWidget
 from html_parser import parse_html
-from progress import ProgressIndicator
 
 
 class DownloadData(QtCore.QThread):
@@ -30,24 +30,14 @@ class DownloadData(QtCore.QThread):
         self.finished.emit(response.text)
 
 
-class MainWidget(QtGui.QWidget):
+class MyWidget(DisplayWidget):
     def __init__(self, parent=None):
-        super(MainWidget, self).__init__(parent)
+        super(MyWidget, self).__init__(parent)
 
         # We need to store a reference to the thread, otherwise it will be
         # destroyed when the method finishes.
         self._thread = DownloadData()
         self._thread.finished.connect(self._populate_textarea)
-
-        self._layout = QtGui.QVBoxLayout(self)
-        self._textarea = QtGui.QPlainTextEdit()
-        self._textarea.setReadOnly(True)
-        self._layout.addWidget(self._textarea)
-        self._button = QtGui.QPushButton('Download')
-        self._button.clicked.connect(self._button_clicked)
-        self._layout.addWidget(self._button)
-        self._progress = ProgressIndicator()
-        self._layout.addWidget(self._progress)
 
     def _button_clicked(self):
         self._thread.start()
@@ -58,7 +48,7 @@ class MainWidget(QtGui.QWidget):
 
 def main(argv):
     app = QtGui.QApplication(argv)
-    w = MainWidget()
+    w = MyWidget()
     w.show()
     w.raise_()
     return app.exec_()
