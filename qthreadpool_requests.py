@@ -16,6 +16,7 @@ import sys
 import requests
 from PySide import QtCore, QtGui
 
+from url import DOWNLOAD_URL
 from window import DisplayWidget
 from html_parser import parse_html
 
@@ -30,8 +31,7 @@ class DownloadData(RunnableWithSignals):
     finished = QtCore.Signal(str)
 
     def run(self):
-        response = requests.get(
-            'http://www.gutenberg.org/cache/epub/10/pg10.txt')
+        response = requests.get(DOWNLOAD_URL)
         parse_html()
         self.finished.emit(response.text)
 

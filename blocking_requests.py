@@ -13,6 +13,7 @@ import sys
 import requests
 from PySide import QtGui
 
+from url import DOWNLOAD_URL
 from window import DisplayWidget
 from html_parser import parse_html
 
@@ -22,8 +23,7 @@ class MyWidget(DisplayWidget):
         super(MyWidget, self).__init__(parent)
 
     def _button_clicked(self):
-        response = requests.get(
-            'http://www.gutenberg.org/cache/epub/10/pg10.txt')
+        response = requests.get(DOWNLOAD_URL)
         parse_html()
         self._textarea.setPlainText(response.text)
 

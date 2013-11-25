@@ -20,6 +20,7 @@ import sys
 
 from PySide import QtGui, QtNetwork
 
+from url import DOWNLOAD_URL
 from window import DisplayWidget
 from html_parser import parse_html
 
@@ -31,8 +32,7 @@ class MyWidget(DisplayWidget):
         self._qnam = QtNetwork.QNetworkAccessManager()
 
     def _button_clicked(self):
-        request = QtNetwork.QNetworkRequest(
-            'http://www.gutenberg.org/cache/epub/10/pg10.txt')
+        request = QtNetwork.QNetworkRequest(DOWNLOAD_URL)
         self._reply = self._qnam.get(request)
         self._reply.finished.connect(self._populate_textarea)
 
